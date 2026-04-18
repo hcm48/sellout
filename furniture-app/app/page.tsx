@@ -191,7 +191,7 @@ export default function Home() {
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(8);
       pdf.setTextColor(160, 150, 140);
-      pdf.text("snap it. list it. your move.", pageW / 2, 59, { align: "center" });
+      pdf.text("snap it. list it. move it.", pageW / 2, 59, { align: "center" });
 
       // Column headers
       let rowY = 78;
@@ -356,7 +356,7 @@ export default function Home() {
         <header className="mb-14 text-center">
           <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Clearout</h1>
           <hr className="border-stone-300 mt-3 mb-2.5 mx-auto w-56" />
-          <p className="text-xs text-stone-400 tracking-[0.18em] font-light">snap it. list it. your move.</p>
+          <p className="text-xs text-stone-400 tracking-[0.18em] font-light">snap it. list it. move it.</p>
         </header>
 
         <div className="flex-1 flex flex-col justify-center max-w-sm mx-auto w-full">
@@ -399,7 +399,7 @@ export default function Home() {
       <header className="mb-14 text-center">
         <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Clearout</h1>
         <hr className="border-stone-300 mt-3 mb-2.5 mx-auto w-56" />
-        <p className="text-xs text-stone-400 tracking-[0.18em] font-light">snap it. list it. your move.</p>
+        <p className="text-xs text-stone-400 tracking-[0.18em] font-light">snap it. list it. move it.</p>
       </header>
 
       {/* Facebook Marketplace view */}
