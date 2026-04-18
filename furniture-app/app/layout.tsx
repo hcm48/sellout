@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
@@ -14,9 +14,20 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#1C1917",
+};
+
 export const metadata: Metadata = {
   title: "Clearout",
   description: "Snap it. List it. Move it.",
+  appleWebApp: {
+    capable: true,
+    title: "Clearout",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export default function RootLayout({

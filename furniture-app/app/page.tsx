@@ -352,9 +352,9 @@ export default function Home() {
 
   if (!gateCleared) {
     return (
-      <main className="max-w-2xl mx-auto px-6 py-14 min-h-screen flex flex-col">
+      <main className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-14 min-h-screen flex flex-col">
         <header className="mb-14 text-center">
-          <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Clearout</h1>
+          <h1 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Clearout</h1>
           <hr className="border-stone-300 mt-3 mb-2.5 mx-auto w-56" />
           <p className="text-xs text-stone-400 tracking-[0.18em] font-light">snap it. list it. move it.</p>
         </header>
@@ -393,11 +393,11 @@ export default function Home() {
   }
 
   return (
-    <main className="max-w-2xl mx-auto px-6 py-14">
+    <main className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
 
       {/* Wordmark */}
       <header className="mb-14 text-center">
-        <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Clearout</h1>
+        <h1 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Clearout</h1>
         <hr className="border-stone-300 mt-3 mb-2.5 mx-auto w-56" />
         <p className="text-xs text-stone-400 tracking-[0.18em] font-light">snap it. list it. move it.</p>
       </header>
@@ -531,7 +531,7 @@ export default function Home() {
       {uploadedImages.length === 0 && items.length === 0 && (
         <section className="mb-10">
           <div
-            className="border border-dashed border-stone-300 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-stone-400 transition-colors p-12 bg-white"
+            className="border border-dashed border-stone-300 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-stone-400 transition-colors p-8 sm:p-12 bg-white"
             onClick={() => fileRef.current?.click()}
           >
             <div className="w-10 h-10 mb-4 text-stone-300">
