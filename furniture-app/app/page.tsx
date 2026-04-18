@@ -601,6 +601,9 @@ export default function Home() {
             <button onClick={confirmUploadedItems} className="flex-1 bg-stone-900 hover:bg-stone-800 text-white font-medium rounded-lg py-2.5 text-sm transition">
               Confirm items
             </button>
+            <button onClick={() => fileRef.current?.click()} className="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-600 font-medium rounded-lg py-2.5 text-sm transition">
+              + Add more
+            </button>
             <button onClick={() => setUploadedImages([])} className="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-600 font-medium rounded-lg py-2.5 text-sm transition">
               Cancel
             </button>
