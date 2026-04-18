@@ -17,27 +17,30 @@ export async function POST(request: Request) {
   const dc = apiKey.split("-").at(-1);
   const url = `https://${dc}.api.mailchimp.com/3.0/lists/${audienceId}/members`;
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${Buffer.from(`anystring:${apiKey}`).toString("base64")}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email_address: email,
-      status: "subscribed",
-      merge_fields: { FNAME: firstName },
-    }),
-  });
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${Buffer.from(`anystring:${apiKey}`).toString("base64")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email_address: email,
+        status: "subscribed",
+        merge_fields: { FNAME: firstName },
+      }),
+    });
 
-  const data = await res.json();
-
-  // 400 with "Member Exists" is fine — user already subscribed, let them through
-  if (res.ok || data.title === "Member Exists") {
-    console.log(`[waitlist] subscribed: ${firstName} <${email}>`);
-    return Response.json({ ok: true });
+    const data = await res.json();
+    if (res.ok) {
+      console.log(`[waitlist] subscribed: ${firstName} <${email}>`);
+    } else {
+      console.error(`[waitlist] Mailchimp error for ${email}:`, data.title, data.detail);
+    }
+  } catch (err) {
+    console.error("[waitlist] Mailchimp request failed:", err);
   }
 
-  console.error("[waitlist] Mailchimp error:", data);
-  return Response.json({ error: data.detail || "Failed to subscribe" }, { status: 500 });
+  // Always let the user through regardless of Mailchimp outcome
+  return Response.json({ ok: true });
 }
