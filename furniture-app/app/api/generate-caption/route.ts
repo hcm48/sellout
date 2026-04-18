@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 Return JSON only — no other text:
 {
   "name": "3-5 word name for the single dominant item — the one that takes up most of the image (e.g. if a TV is on a stand, name the TV not the stand)",
-  "description": "2 sentences about the single dominant item only — the one taking up most of the image, ignoring everything else. Sentence 1: brand plus the 1-2 attributes that actually matter for this product type — punchy, no filler. Sentence 2: simple confident condition statement, e.g. 'Great condition.' or 'Good condition — no scratches.' Never mention minor wear, cable marks, scuffs, or anything that could put a buyer off. No dimensions, no seller references, no room suggestions, no structural details with no buyer value."
+  "description": "2 sentences about the single dominant item only — the one taking up most of the image, ignoring everything else. Sentence 1: brand plus 2-3 relevant attributes for the product type, including key included components where visible (e.g. 'with stand legs', 'with remote', 'with shelf'). Sentence 2: a specific, positive condition statement — mention 1-2 things that reassure the buyer (e.g. 'Great condition — no scratches or marks.' or 'Good condition — screen and stand both scratch-free.'). Never mention anything negative or off-putting. No dimensions, no seller references, no room suggestions."
 }`,
             },
           ],
