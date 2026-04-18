@@ -15,8 +15,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Sellout",
-  description: "Snap it. List it. Your move.",
+  title: "Clearout",
+  description: "Snap it. List it. Move it.",
 };
 
 export default function RootLayout({

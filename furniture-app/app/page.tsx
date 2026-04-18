@@ -23,14 +23,14 @@ export default function Home() {
   const [items, setItems] = useState<Item[]>(() => {
     if (typeof window === "undefined") return [];
     try {
-      const saved = localStorage.getItem("sellout-items");
+      const saved = localStorage.getItem("clearout-items");
       return saved ? JSON.parse(saved) : [];
     } catch { return []; }
   });
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [gateCleared, setGateCleared] = useState(() => {
     if (typeof window === "undefined") return false;
-    return localStorage.getItem("sellout-gate-passed") === "true";
+    return localStorage.getItem("clearout-gate-passed") === "true";
   });
   const [gateFirstName, setGateFirstName] = useState("");
   const [gateEmail, setGateEmail] = useState("");
@@ -48,7 +48,7 @@ export default function Home() {
 
   useEffect(() => {
     try {
-      localStorage.setItem("sellout-items", JSON.stringify(items));
+      localStorage.setItem("clearout-items", JSON.stringify(items));
     } catch { /* quota exceeded */ }
   }, [items]);
 
@@ -71,7 +71,7 @@ export default function Home() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to subscribe");
-      localStorage.setItem("sellout-gate-passed", "true");
+      localStorage.setItem("clearout-gate-passed", "true");
       setGateCleared(true);
     } catch (e) {
       setGateError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
@@ -179,7 +179,7 @@ export default function Home() {
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(30);
       pdf.setTextColor(28, 25, 23);
-      pdf.text("SELLOUT", pageW / 2, 46, { align: "center" });
+      pdf.text("CLEAROUT", pageW / 2, 46, { align: "center" });
 
       // Divider
       const divW = 52;
@@ -308,7 +308,7 @@ export default function Home() {
         pdf.text(`${i + 1} / ${items.length}`, pageW / 2, pageH - 5, { align: "center" });
       }
 
-      pdf.save("sellout-listings.pdf");
+      pdf.save("clearout-listings.pdf");
     } finally {
       setLoadingDeck(false);
     }
@@ -354,7 +354,7 @@ export default function Home() {
     return (
       <main className="max-w-2xl mx-auto px-6 py-14 min-h-screen flex flex-col">
         <header className="mb-14 text-center">
-          <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Sellout</h1>
+          <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Clearout</h1>
           <hr className="border-stone-300 mt-3 mb-2.5 mx-auto w-56" />
           <p className="text-xs text-stone-400 tracking-[0.18em] font-light">snap it. list it. your move.</p>
         </header>
@@ -397,7 +397,7 @@ export default function Home() {
 
       {/* Wordmark */}
       <header className="mb-14 text-center">
-        <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Sellout</h1>
+        <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-bold tracking-[0.25em] text-stone-900 uppercase">Clearout</h1>
         <hr className="border-stone-300 mt-3 mb-2.5 mx-auto w-56" />
         <p className="text-xs text-stone-400 tracking-[0.18em] font-light">snap it. list it. your move.</p>
       </header>
