@@ -250,7 +250,7 @@ export default function Home() {
         pdf.setFillColor(247, 245, 241);
         pdf.rect(0, 0, pageW, pageH, "F");
 
-        // Charcoal header bar — name + price stacked
+        // Charcoal header bar — name LHS, price RHS
         const itemHeaderH = 30;
         pdf.setFillColor(28, 25, 23);
         pdf.rect(0, 0, pageW, itemHeaderH, "F");
@@ -258,12 +258,12 @@ export default function Home() {
         pdf.setTextColor(247, 245, 241);
         pdf.setFontSize(15);
         pdf.setFont("helvetica", "bold");
-        pdf.text(item.name, margin, 13);
+        pdf.text(item.name, margin, itemHeaderH / 2 + 3);
 
-        pdf.setFontSize(11);
-        pdf.setFont("helvetica", "normal");
-        pdf.setTextColor(180, 170, 160);
-        pdf.text(`$${item.price}`, margin, 23);
+        pdf.setFontSize(20);
+        pdf.setFont("helvetica", "bold");
+        pdf.setTextColor(255, 255, 255);
+        pdf.text(`$${item.price}`, pageW - margin, itemHeaderH / 2 + 4, { align: "right" });
 
         // Image
         const imgStartY = itemHeaderH + 5;
