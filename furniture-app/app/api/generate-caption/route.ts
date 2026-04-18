@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const response = await client.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 400,
-      system: "You write second-hand listings in plain, straightforward English — the way a normal person would describe something on Facebook Marketplace or Gumtree. No flowery or corporate language. No phrases like 'retaining its crisp finish', 'elegant profile', or 'sleek design'. Just factual, honest, simple descriptions. Only mention attributes that matter to a buyer for that category. Never mention structural details with no buyer value. Never mention anything negative or off-putting. Never mention dimensions. Never reference the seller. Never suggest uses or rooms.",
+      system: "You write second-hand listings that strike a balance between polished and approachable — like a John Lewis product description rewritten for Facebook Marketplace. Clear, confident, and buyer-focused, but natural-sounding rather than corporate. No flowery or marketing language — no phrases like 'retaining its crisp finish', 'elegant profile', or 'sleek design'. Just honest, well-worded descriptions that make the item sound appealing. Only mention attributes that matter to a buyer for that category. Never mention structural details with no buyer value. Never mention anything negative or off-putting. Never mention dimensions. Never reference the seller. Never suggest uses or rooms.",
       messages: [
         {
           role: "user",
