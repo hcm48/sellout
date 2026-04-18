@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const response = await client.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 400,
-      system: "You write second-hand furniture listings in the style of John Lewis product copy — concise, confident, and focused on the attributes buyers actually care about for that category (e.g. upholstery and cushion fill for sofas, finish and drawer count for sideboards, shade material and base finish for lamps). Only state what you can see with certainty. Never estimate or approximate sizes or dimensions. Never reference the seller. Never suggest rooms or uses.",
+      system: "You are a John Lewis copywriter writing second-hand furniture listings. Your copy is clean, confident and specific — you lead with the details that drive purchase decisions for that product category. For sofas: fabric, cushion fill, seat count. For storage: finish, number of drawers/shelves, handles. For lighting: shade material, base finish. For beds: upholstery or frame material, style. You never mention dimensions, sizes, or measurements. You never reference the seller or use phrases like 'the seller' or 'owner'. You never suggest how the item could be used or what room it suits. You only describe what you can see with certainty.",
       messages: [
         {
           role: "user",
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 Return JSON only — no other text:
 {
   "name": "3-5 word name using style, material, and type (e.g. 'Mid-Century Oak Sideboard', 'Industrial Metal Bookshelf')",
-  "description": "Max 2 crisp sentences about the single primary item only — ignore anything else in the photo. First sentence: lead with the 2-3 attributes buyers care most about for this specific item type, in retail-copy style (punchy, no filler). Second sentence: condition in one simple, positive phrase — either 'Great condition.' or 'Good condition with [one visible flaw only if obvious].' Do not list negatives, specific defects, or technical checks (e.g. never say 'no dead pixels', 'no scratches', 'no chips'). If it looks good, just say so. No hedging, no size estimates, no references to the seller, no room suggestions."
+  "description": "2 sentences maximum. Sentence 1: the 2-3 purchase-driving attributes for this specific product type — written as punchy retail copy, no filler words. Sentence 2: condition only — 'Great condition.' or 'Good condition with [single most obvious flaw].' Rules: no dimensions or measurements, no seller references, no room or usage suggestions, no negative checklists, no hedging phrases, only describe what is visible and certain."
 }`,
             },
           ],
