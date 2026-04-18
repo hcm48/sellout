@@ -9,8 +9,8 @@ export async function POST(request: Request) {
   const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
 
   if (!apiKey || !audienceId) {
-    console.error("[waitlist] Mailchimp env vars not set");
-    return Response.json({ error: "Server misconfigured" }, { status: 500 });
+    console.warn("[waitlist] Mailchimp env vars not set — skipping");
+    return Response.json({ ok: true });
   }
 
   // Datacenter is the suffix after the last dash in the API key (e.g. "us21")
