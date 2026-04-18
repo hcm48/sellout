@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const response = await client.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 400,
-      system: "You are a John Lewis copywriter writing second-hand furniture listings. Your copy is clean, confident and specific — you lead with the details that drive purchase decisions for that product category. For sofas: fabric, cushion fill, seat count. For storage: finish, number of drawers/shelves, handles. For lighting: shade material, base finish. For beds: upholstery or frame material, style. You never mention dimensions, sizes, or measurements. You never reference the seller or use phrases like 'the seller' or 'owner'. You never suggest how the item could be used or what room it suits. You only describe what you can see with certainty.",
+      system: "You are a John Lewis copywriter writing second-hand listings. Be brief and buyer-focused. Only mention attributes that genuinely drive purchase decisions for that category — for sofas: fabric and seat count; for storage: finish and drawer count; for TVs and electronics: brand and finish only; for lighting: shade material and base finish; for beds: frame material and style. Never mention structural details with no buyer value (bezel type, stand leg shape, cable management, hinge style). Never mention anything that could put a buyer off — no visible wear, cable marks, minor scuffs, or any flaws unless they are significant damage. Never mention dimensions, sizes, or measurements. Never reference the seller. Never suggest uses or rooms.",
       messages: [
         {
           role: "user",
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 Return JSON only — no other text:
 {
   "name": "3-5 word name using style, material, and type (e.g. 'Mid-Century Oak Sideboard', 'Industrial Metal Bookshelf')",
-  "description": "2 sentences maximum. Sentence 1: the 2-3 purchase-driving attributes for this specific product type — written as punchy retail copy, no filler words. Sentence 2: condition only — 'Great condition.' or 'Good condition with [single most obvious flaw].' Rules: no dimensions or measurements, no seller references, no room or usage suggestions, no negative checklists, no hedging phrases, only describe what is visible and certain."
+  "description": "2 sentences maximum. Sentence 1: brand plus the 1-2 attributes that actually matter for this product type — punchy, no filler. Sentence 2: simple confident condition statement, e.g. 'Great condition.' or 'Good condition — no scratches.' Never mention minor wear, cable marks, scuffs, or anything that could put a buyer off. No dimensions, no seller references, no room suggestions, no structural details with no buyer value."
 }`,
             },
           ],
