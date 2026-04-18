@@ -18,6 +18,7 @@ interface UploadedImage {
   description?: string;
   loadingCaption?: boolean;
   captionError?: string;
+  captionRetryable?: boolean;
 }
 
 export default function Home() {
@@ -82,6 +83,9 @@ export default function Home() {
   }
 
   async function generateCaption(imageId: string, dataUrl: string) {
+    setUploadedImages((prev) =>
+      prev.map((img) => img.id === imageId ? { ...img, loadingCaption: true, captionError: undefined, captionRetryable: undefined } : img)
+    );
     try {
       const res = await fetch("/api/generate-caption", {
         method: "POST",
@@ -93,7 +97,7 @@ export default function Home() {
         setUploadedImages((prev) =>
           prev.map((img) =>
             img.id === imageId
-              ? { ...img, loadingCaption: false, captionError: "I'm sorry but I cannot generate a caption for this as I am only designed to be used for selling items as part of an apartment clearout." }
+              ? { ...img, loadingCaption: false, captionError: "I'm sorry but I cannot generate a caption for this as I am only designed to be used for selling items as part of an apartment clearout.", captionRetryable: false }
               : img
           )
         );
@@ -103,13 +107,17 @@ export default function Home() {
       setUploadedImages((prev) =>
         prev.map((img) =>
           img.id === imageId
-            ? { ...img, name: data.name || img.name, description: data.description || img.description, loadingCaption: false }
+            ? { ...img, name: data.name || img.name, description: data.description || img.description, loadingCaption: false, captionError: undefined }
             : img
         )
       );
     } catch {
       setUploadedImages((prev) =>
-        prev.map((img) => img.id === imageId ? { ...img, loadingCaption: false } : img)
+        prev.map((img) =>
+          img.id === imageId
+            ? { ...img, loadingCaption: false, captionError: "Couldn't generate a caption — tap Retry to try again.", captionRetryable: true }
+            : img
+        )
       );
     }
   }
@@ -574,7 +582,17 @@ export default function Home() {
                 <img src={img.imageDataUrl} alt="preview" className="w-20 h-20 object-cover rounded-lg flex-shrink-0" />
                 <div className="flex-1 space-y-2">
                   {img.captionError ? (
-                    <p className="text-xs text-stone-400 italic leading-relaxed py-1">{img.captionError}</p>
+                    <div className="py-1 space-y-2">
+                      <p className="text-xs text-stone-400 italic leading-relaxed">{img.captionError}</p>
+                      {img.captionRetryable && (
+                        <button
+                          onClick={() => generateCaption(img.id, img.imageDataUrl)}
+                          className="text-xs text-stone-500 underline hover:text-stone-800 transition"
+                        >
+                          Retry
+                        </button>
+                      )}
+                    </div>
                   ) : (
                     <>
                       <input
