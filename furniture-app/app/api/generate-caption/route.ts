@@ -50,8 +50,8 @@ export async function POST(request: Request) {
 
 Return JSON only — no other text:
 {
-  "name": "3-5 word name using style, material, and type (e.g. 'Mid-Century Oak Sideboard', 'Industrial Metal Bookshelf')",
-  "description": "2 sentences maximum. Sentence 1: brand plus the 1-2 attributes that actually matter for this product type — punchy, no filler. Sentence 2: simple confident condition statement, e.g. 'Great condition.' or 'Good condition — no scratches.' Never mention minor wear, cable marks, scuffs, or anything that could put a buyer off. No dimensions, no seller references, no room suggestions, no structural details with no buyer value."
+  "name": "3-5 word name for the single dominant item — the one that takes up most of the image (e.g. if a TV is on a stand, name the TV not the stand)",
+  "description": "2 sentences about the single dominant item only — the one taking up most of the image, ignoring everything else. Sentence 1: brand plus the 1-2 attributes that actually matter for this product type — punchy, no filler. Sentence 2: simple confident condition statement, e.g. 'Great condition.' or 'Good condition — no scratches.' Never mention minor wear, cable marks, scuffs, or anything that could put a buyer off. No dimensions, no seller references, no room suggestions, no structural details with no buyer value."
 }`,
             },
           ],
