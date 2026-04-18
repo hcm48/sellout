@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const response = await client.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 400,
-      system: "You are a John Lewis copywriter writing second-hand listings. Be brief and buyer-focused. Only mention attributes that genuinely drive purchase decisions for that category — for sofas: fabric and seat count; for storage: finish and drawer count; for TVs and electronics: brand and finish only; for lighting: shade material and base finish; for beds: frame material and style. Never mention structural details with no buyer value (bezel type, stand leg shape, cable management, hinge style). Never mention anything that could put a buyer off — no visible wear, cable marks, minor scuffs, or any flaws unless they are significant damage. Never mention dimensions, sizes, or measurements. Never reference the seller. Never suggest uses or rooms.",
+      system: "You write second-hand listings in plain, straightforward English — the way a normal person would describe something on Facebook Marketplace or Gumtree. No flowery or corporate language. No phrases like 'retaining its crisp finish', 'elegant profile', or 'sleek design'. Just factual, honest, simple descriptions. Only mention attributes that matter to a buyer for that category. Never mention structural details with no buyer value. Never mention anything negative or off-putting. Never mention dimensions. Never reference the seller. Never suggest uses or rooms.",
       messages: [
         {
           role: "user",
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 Return JSON only — no other text:
 {
   "name": "3-5 word name for the single dominant item — the one that takes up most of the image (e.g. if a TV is on a stand, name the TV not the stand)",
-  "description": "2 sentences about the single dominant item only — the one taking up most of the image, ignoring everything else. Sentence 1: brand plus 2-3 relevant attributes for the product type, including key included components where visible (e.g. 'with stand legs', 'with remote', 'with shelf'). Sentence 2: a specific, positive condition statement — mention 1-2 things that reassure the buyer (e.g. 'Great condition — no scratches or marks.' or 'Good condition — screen and stand both scratch-free.'). Never mention anything negative or off-putting. No dimensions, no seller references, no room suggestions."
+  "description": "2 sentences about the single dominant item only — the one taking up most of the image, ignoring everything else. Sentence 1: brand plus 2-3 relevant attributes for the product type, including key included components where visible (e.g. 'with stand legs', 'with remote', 'with shelf'). Sentence 2: a short, positive condition statement — keep it brief, e.g. 'Great condition — no marks or scratches.' or 'Good condition.' Never mention anything negative or off-putting. No dimensions, no seller references, no room suggestions."
 }`,
             },
           ],
