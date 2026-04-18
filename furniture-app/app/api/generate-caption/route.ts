@@ -46,9 +46,16 @@ export async function POST(request: Request) {
             },
             {
               type: "text",
-              text: `Analyze this furniture photo and create an optimized second-hand marketplace listing.
+              text: `Analyze this photo.
 
-Return JSON only — no other text:
+First, check if this image is suitable for a home clearout listing. Reject it if:
+- It shows a person (selfie, portrait, or anyone who is not clearly a mannequin or model displaying clothing/wearable items for sale as part of a home clearout)
+- It contains inappropriate or offensive content
+
+If the image is not suitable, return ONLY this JSON:
+{"error": "not_item_for_sale"}
+
+Otherwise, create an optimized second-hand marketplace listing and return ONLY this JSON:
 {
   "name": "3-5 word name for the single dominant item — the one that takes up most of the image (e.g. if a TV is on a stand, name the TV not the stand)",
   "description": "2 sentences about the single dominant item only — the one taking up most of the image, ignoring everything else. Sentence 1: brand plus 2-3 relevant attributes for the product type, including key included components where visible (e.g. 'with stand legs', 'with remote', 'with shelf'). Sentence 2: condition only — maximum 6 words, e.g. 'Great condition — no scratches.' or 'Good condition, barely used.' Use definitive language (is/are) not hedging language (looks/seems). Never mention anything negative or off-putting. No dimensions, no seller references, no room suggestions."
@@ -63,6 +70,9 @@ Return JSON only — no other text:
 
     try {
       const parsed = JSON.parse(text);
+      if (parsed.error === "not_item_for_sale") {
+        return Response.json({ error: "not_item_for_sale" }, { status: 422 });
+      }
       return Response.json(parsed);
     } catch {
       // Fallback parsing if JSON is malformed

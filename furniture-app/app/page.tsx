@@ -17,6 +17,7 @@ interface UploadedImage {
   price: string;
   description?: string;
   loadingCaption?: boolean;
+  captionError?: string;
 }
 
 export default function Home() {
@@ -88,6 +89,16 @@ export default function Home() {
         body: JSON.stringify({ imageDataUrl: dataUrl }),
       });
       const data = await res.json();
+      if (res.status === 422 && data.error === "not_item_for_sale") {
+        setUploadedImages((prev) =>
+          prev.map((img) =>
+            img.id === imageId
+              ? { ...img, loadingCaption: false, captionError: "I'm sorry but I cannot generate a caption for this as I am only designed to be used for selling items as part of an apartment clearout." }
+              : img
+          )
+        );
+        return;
+      }
       if (!res.ok) throw new Error(data.error || "Failed to generate caption");
       setUploadedImages((prev) =>
         prev.map((img) =>
@@ -142,13 +153,14 @@ export default function Home() {
   }
 
   function confirmUploadedItems() {
-    const incompleteItems = uploadedImages.filter((img) => !img.name.trim() || !img.price.trim());
+    const validImages = uploadedImages.filter((img) => !img.captionError);
+    const incompleteItems = validImages.filter((img) => !img.name.trim() || !img.price.trim());
     if (incompleteItems.length > 0) {
       setError(`Please fill in name and price for all ${incompleteItems.length} item(s).`);
       return;
     }
     setError("");
-    const newItems = uploadedImages.map((img) => ({
+    const newItems = validImages.map((img) => ({
       id: img.id,
       name: img.name.trim(),
       price: img.price.trim(),
@@ -561,32 +573,38 @@ export default function Home() {
               <div key={img.id} className="flex gap-4 items-start bg-white rounded-xl p-4 border border-stone-100">
                 <img src={img.imageDataUrl} alt="preview" className="w-20 h-20 object-cover rounded-lg flex-shrink-0" />
                 <div className="flex-1 space-y-2">
-                  <input
-                    type="text"
-                    placeholder={img.loadingCaption ? "Analysing…" : "Item name"}
-                    value={img.name}
-                    disabled={img.loadingCaption}
-                    onChange={(e) => updateUploadedImage(img.id, "name", e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2 text-sm text-stone-900 placeholder:text-stone-300 focus:outline-none focus:ring-1 focus:ring-stone-400 disabled:text-stone-300 transition"
-                  />
-                  <textarea
-                    placeholder={img.loadingCaption ? "Analysing…" : "Description (optional)"}
-                    value={img.description || ""}
-                    disabled={img.loadingCaption}
-                    onChange={(e) => updateUploadedImage(img.id, "description", e.target.value)}
-                    rows={2}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2 text-sm text-stone-900 placeholder:text-stone-300 focus:outline-none focus:ring-1 focus:ring-stone-400 resize-none disabled:text-stone-300 transition"
-                  />
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-300 text-sm">$</span>
-                    <input
-                      type="number"
-                      placeholder="0"
-                      value={img.price}
-                      onChange={(e) => updateUploadedImage(img.id, "price", e.target.value)}
-                      className="w-full bg-stone-50 border border-stone-200 rounded-lg pl-6 pr-3 py-2 text-sm text-stone-900 placeholder:text-stone-300 focus:outline-none focus:ring-1 focus:ring-stone-400 transition"
-                    />
-                  </div>
+                  {img.captionError ? (
+                    <p className="text-xs text-stone-400 italic leading-relaxed py-1">{img.captionError}</p>
+                  ) : (
+                    <>
+                      <input
+                        type="text"
+                        placeholder={img.loadingCaption ? "Analysing…" : "Item name"}
+                        value={img.name}
+                        disabled={img.loadingCaption}
+                        onChange={(e) => updateUploadedImage(img.id, "name", e.target.value)}
+                        className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2 text-sm text-stone-900 placeholder:text-stone-300 focus:outline-none focus:ring-1 focus:ring-stone-400 disabled:text-stone-300 transition"
+                      />
+                      <textarea
+                        placeholder={img.loadingCaption ? "Analysing…" : "Description (optional)"}
+                        value={img.description || ""}
+                        disabled={img.loadingCaption}
+                        onChange={(e) => updateUploadedImage(img.id, "description", e.target.value)}
+                        rows={2}
+                        className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2 text-sm text-stone-900 placeholder:text-stone-300 focus:outline-none focus:ring-1 focus:ring-stone-400 resize-none disabled:text-stone-300 transition"
+                      />
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-300 text-sm">$</span>
+                        <input
+                          type="number"
+                          placeholder="0"
+                          value={img.price}
+                          onChange={(e) => updateUploadedImage(img.id, "price", e.target.value)}
+                          className="w-full bg-stone-50 border border-stone-200 rounded-lg pl-6 pr-3 py-2 text-sm text-stone-900 placeholder:text-stone-300 focus:outline-none focus:ring-1 focus:ring-stone-400 transition"
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
                 <button onClick={() => removeUploadedImage(img.id)} className="text-stone-300 hover:text-stone-500 transition mt-1">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
